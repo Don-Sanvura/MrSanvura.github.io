@@ -255,12 +255,14 @@
   /* ── ABOUT ── */
   #about{background:var(--paper-2);}
   .about-grid{display:grid;grid-template-columns:0.85fr 1fr;gap:5.5rem;align-items:center;}
-  .about-frame{position:relative;padding:1.3rem;}
+  .about-frame{position:relative;padding:1.3rem;max-width:360px;margin:0 auto;}
   .about-frame::before{content:'';position:absolute;top:14px;left:14px;right:-6px;bottom:-6px;
-    border:1px solid var(--brass);pointer-events:none;z-index:-1;}
-  .about-frame-inner{position:relative;border:1px solid var(--line-strong);padding:0.6rem;background:var(--card);}
+    border:1px solid rgba(168,124,63,0.45);pointer-events:none;z-index:-1;}
+  .about-frame-inner{position:relative;border:1px solid rgba(107,63,160,0.18);padding:0.7rem;background:linear-gradient(145deg,rgba(255,253,251,0.95),rgba(244,238,231,0.95));overflow:hidden;border-radius:20px;box-shadow:0 18px 45px -24px rgba(28,14,46,0.42);}
+  .about-frame-inner::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,0.15),transparent 35%,rgba(168,124,63,0.12) 70%,transparent),linear-gradient(180deg,rgba(28,14,46,0.18),rgba(28,14,46,0.04));pointer-events:none;mix-blend-mode:screen;}
   .about-photo{width:100%;aspect-ratio:4/5;object-fit:cover;filter:sepia(8%) saturate(88%) contrast(1.02);
-    display:block;background:var(--paper-3);}
+    display:block;background:var(--paper-3);border-radius:14px;transition:transform 0.45s var(--ease),filter 0.45s var(--ease),box-shadow 0.45s var(--ease),border-color 0.45s var(--ease);} 
+  .about-frame-inner:hover .about-photo{transform:scale(1.04) translateY(-4px);filter:sepia(4%) saturate(102%) contrast(1.06);box-shadow:0 0 0 1px rgba(255,255,255,0.3),0 0 38px rgba(107,63,160,0.24);}
   .about-photo.img-fallback{
     display:flex;align-items:center;justify-content:center;
     font-family:var(--font-display);font-style:italic;font-weight:600;font-size:3rem;color:var(--purple);
@@ -328,12 +330,13 @@
 
   /* ── PROJECTS (ticket cards) ── */
   #projects{background:var(--paper-2);}
-  .projects-list{display:flex;flex-direction:column;gap:1.3rem;}
+  .projects-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.3rem;}
   .project-item{
-    background:var(--card);border:1px solid var(--line);padding:2.2rem 2.6rem;
-    display:grid;grid-template-columns:auto 148px 1fr auto;gap:2.2rem;align-items:start;
+    background:var(--card);border:1px solid var(--line);padding:1.6rem 1.8rem 2.1rem;
+    display:grid;grid-template-columns:auto 120px 1fr auto;gap:1.4rem;align-items:start;
     transition:border-color 0.35s,transform 0.35s var(--ease),box-shadow 0.35s var(--ease);
     cursor:none;width:100%;text-align:left;color:inherit;font-family:inherit;position:relative;
+    min-height:100%;
   }
   .project-item::before,.project-item::after{
     content:'';position:absolute;top:50%;width:22px;height:22px;border-radius:50%;
@@ -347,7 +350,7 @@
 
   /* project thumbnail — drop your own image path in PROJECTS[i].image */
   .project-thumb{
-    position:relative;width:148px;height:112px;flex-shrink:0;overflow:hidden;
+    position:relative;width:120px;height:92px;flex-shrink:0;overflow:hidden;
     border:1px solid var(--line-strong);background:var(--paper-3);
   }
   .project-thumb img{
@@ -370,11 +373,25 @@
   .project-title{font-family:var(--font-display);font-size:1.4rem;font-weight:600;color:var(--ink);margin-bottom:0.6rem;}
   .project-tech{font-family:var(--font-mono);font-size:0.63rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--purple);margin-bottom:0.9rem;}
   .project-desc{font-size:0.87rem;line-height:1.85;color:var(--ink-soft);max-width:600px;}
-  .project-meta{display:flex;gap:1rem;margin-top:1rem;}
+  .project-meta{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem;}
   .project-meta span{font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.08em;color:var(--ink-faint);
     border:1px dashed var(--line-strong);padding:0.28rem 0.65rem;}
+  .project-actions,.case-actions{display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;margin-top:1.2rem;}
+  .project-link-btn,.case-link-btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    border:1px solid rgba(255,255,255,0.18);background:linear-gradient(180deg,var(--purple-deep),var(--purple));color:var(--paper);
+    font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;
+    padding:0.6rem 1rem;text-decoration:none;transition:transform 0.3s var(--ease),background 0.3s var(--ease),box-shadow 0.3s var(--ease),border-color 0.3s var(--ease);
+    box-shadow:0 12px 28px -16px rgba(28,14,46,0.55);cursor:pointer;border-radius:999px;
+  }
+  .project-link-btn:hover,.case-link-btn:hover{background:linear-gradient(180deg,var(--purple),var(--purple-deep));transform:translateY(-2px);box-shadow:0 16px 32px -16px rgba(107,63,160,0.7);border-color:rgba(255,255,255,0.35);}
+  .project-link-btn:focus-visible,.case-link-btn:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
   .project-arrow{font-size:1.3rem;color:var(--ink-faint);transition:color 0.3s,transform 0.3s;align-self:center;}
   .project-item:hover .project-arrow{color:var(--purple-deep);transform:translateX(6px);}
+
+  @media (max-width:900px){
+    .projects-list{grid-template-columns:1fr;}
+  }
 
   @media (max-width:768px){
     .project-item{grid-template-columns:1fr;}
@@ -636,7 +653,7 @@
       <p>When I'm not coding, you'll find me at a chess board, fuelling debates, or deep in a
         research rabbit hole.</p>
       <div class="about-stats">
-        <div><div class="stat-num">70.8%</div><div class="stat-label">Grade Average</div></div>
+        <div><div class="stat-num">71.5%</div><div class="stat-label">Grade Average</div></div>
         <div><div class="stat-num">4</div><div class="stat-label">Projects Below</div></div>
         <div><div class="stat-num">4</div><div class="stat-label">Languages Spoken</div></div>
       </div>
@@ -650,23 +667,31 @@
   <h2 class="section-title reveal">Where I've <em>Worked</em></h2>
   <div class="timeline">
     <div class="timeline-item reveal" style="transition-delay:0s">
-      <div class="timeline-date">Add dates here</div>
-      <div class="timeline-role">Add job title here</div>
-      <div class="timeline-company">Add company / organisation here</div>
-      <p class="timeline-desc">Add a short description of your responsibilities and impact in this role — what you owned, what you shipped, and what changed because you were there.</p>
-      <div class="timeline-tags"><span>Add skill</span><span>Add skill</span><span>Add skill</span></div>
+      <div class="timeline-date">2026/07/01</div>
+      <div class="timeline-role">Software Developer</div>
+      <div class="timeline-company">Copestatics Marketing Agency</div>
+      <p class="timeline-desc">
+        Reponsiability is to develop and maintain web applications, ensuring they are efficient, scalable, and user-friendly. Collaborate with cross-functional teams to define, design, and ship new features. Implement best practices in coding, testing, and deployment.
+        Web Dev: Used Wordpress & elementor 
+        Deployment: Used Hostinger 
+        Tools: ChatGBT, Google sheets, Google Drive, Canva
+        <link rel="Company Website" href="https://copesetics.com/">
+      </p>
+      <div class="timeline-tags"><span>Wordpress</span><span>CSS</span><span>JS</span></div>
     </div>
     <div class="timeline-item reveal" style="transition-delay:0.08s">
-      <div class="timeline-date">Add dates here</div>
-      <div class="timeline-role">Add job title here</div>
-      <div class="timeline-company">Add company / organisation here</div>
-      <p class="timeline-desc">Add a short description of this role. If it was an internship, WIL placement, or freelance work, say so here — it still counts as experience.</p>
-      <div class="timeline-tags"><span>Add skill</span><span>Add skill</span></div>
+      <div class="timeline-date">2026/06/21</div>
+      <div class="timeline-role">AI prompt engineering</div>
+      <div class="timeline-company">WeThinKCode</div>
+      <p class="timeline-desc">
+       Improve work efficenecy and productivity by using AI tools to automate tasks, generate content, and provide insights. Collaborate with teams to integrate AI solutions into existing workflows, enhancing decision-making and problem-solving capabilities.
+      </p>
+      <div class="timeline-tags"><span>ChatGBT</span><span>Google Gemini</span><span>Claude</span></div>
     </div>
     <div class="timeline-item reveal" style="transition-delay:0.16s">
-      <div class="timeline-date">Add dates here</div>
-      <div class="timeline-role">Add role here</div>
-      <div class="timeline-company">Add company / organisation here</div>
+      <div class="timeline-date">2026/07/01</div>
+      <div class="timeline-role">Machine Learning engineering</div>
+      <div class="timeline-company">FlyRank</div>
       <p class="timeline-desc">This card is a placeholder — duplicate or delete the timeline-item blocks in the HTML to match how many roles you actually want to list.</p>
       <div class="timeline-placeholder">Replace this whole section's content with your real work history — internships, part-time roles, freelance projects, or WIL placements. Delete this note once it's filled in.</div>
     </div>
@@ -716,7 +741,7 @@
 <!-- PROJECTS -->
 <section id="projects">
   <div class="section-label">04 — Projects</div>
-  <h2 class="section-title reveal">Selected <em>Works</em></h2>
+  <h2 class="section-title reveal">Projects<em> done</em></h2>
   <div class="projects-list" id="projects-list">
     <!-- populated by JS from PROJECTS data, cards are buttons -->
   </div>
@@ -743,6 +768,14 @@
         <p class="cert-desc">Creating impactful, interactive web creatives and animated ad content using Google Web Designer.</p>
       </div>
     </div>
+    <div class="cert-card reveal" style="transition-delay:0.08s">
+      <div class="cert-seal">AI</div>
+      <div>
+        <div class="cert-issuer">GenAI Course for Professionals</div>
+        <div class="cert-name">GenAI Certification</div>
+        <p class="cert-desc">Professional use of AI and training course completion</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -758,7 +791,7 @@
       <div class="edu-date" style="margin-top:1rem;">Feb 2023 – Present &nbsp;·&nbsp; Final Year, Expected 2026</div>
     </div>
     <div class="edu-gpa">
-      <div class="gpa-num">70.8%</div>
+      <div class="gpa-num">71.5%</div>
       <div class="gpa-label">Grade Average</div>
     </div>
   </div>
@@ -781,6 +814,12 @@
   <div class="section-label" style="justify-content:center">08 — Contact</div>
   <h2 class="contact-tagline reveal">Let's Build Something<br><em>Great Together</em></h2>
   <p class="contact-sub reveal">Currently seeking internship opportunities, graduate programmes, and Work Integrated Learning (WIL) positions. Open to collaboration.</p>
+  <div class="contact-links reveal" style="margin-bottom:1.2rem;">
+    <a href="https://docs.google.com/document/d/1wZqD1S1hhfqkMs7_K6_y52GoQfY0vR-u/edit?usp=drive_link&ouid=111960625925378238262&rtpof=true&sd=true" target="_blank" rel="noopener" class="contact-link magnetic" data-label="View">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm1 7V3.5L19.5 9H15a1 1 0 0 1-1-1zm-1 8a1 1 0 0 1-1 1H8a1 1 0 0 1 0-2h5a1 1 0 0 1 1 1zm0-3a1 1 0 0 1-1 1H8a1 1 0 0 1 0-2h5a1 1 0 0 1 1 1z"/></svg>
+      View My CV
+    </a>
+  </div>
   <div class="contact-links reveal">
     <a href="mailto:Dwagsanvura@gmail.com" class="contact-link magnetic" data-label="Mail">
       <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
@@ -828,10 +867,13 @@ const PROJECTS = [
     num: "01",
     tech: "Microsoft Power Platform",
     title: "BCWild-Watch",
-    image: "img/projects/bcwildwatch.jpg",
+    image: "img/Bc wild watch.png",
     desc: "A campus animal safety reporting system enabling real-time reporting of dangerous wildlife sightings — snakes, bees, stray dogs. Streamlines incident logging and ensures timely communication to campus authorities.",
+    
+    github: "https://github.com/Bc-WildWatch/BC_WildWatch.git",
+
     tags: ["Power Apps","Power Automate","Dataverse","Low-Code"],
-    duration: "Add your time here",
+    duration: "2026/02/01 – 2026/05/15",
     role: "Solo build",
     status: "Shipped",
     problem: "Campus safety reports were relayed informally — by word of mouth or ad-hoc messages — which meant hazard sightings like snakes or bee swarms could sit unaddressed for far too long, with no record of what was reported, where, or when.",
@@ -846,9 +888,9 @@ const PROJECTS = [
       "Automated routing removed the manual step of relaying a report to the right department."
     ],
     changelog: [
-      { stage: "v1 — Intake form", note: "Basic Power Apps form capturing sighting type and location.", time: "Add date/time here" },
-      { stage: "v2 — Automated routing", note: "Added Power Automate flow to notify campus safety on submission.", time: "Add date/time here" },
-      { stage: "v3 — Audit trail", note: "Connected Dataverse logging so every report persists with a timestamp and status.", time: "Add date/time here" }
+      { stage: "— Intake form", note: "Basic Power Apps form capturing sighting type and location.", time: "2026/02/10 · 09:30" },
+      { stage: "— Automated routing", note: "Added Power Automate flow to notify campus safety on submission.", time: "2026/03/18 · 14:15" },
+      { stage: "— Audit trail", note: "Connected Dataverse logging so every report persists with a timestamp and status.", time: "2026/05/12 · 11:00" }
     ]
   },
   {
@@ -856,10 +898,13 @@ const PROJECTS = [
     num: "02",
     tech: "Data Visualisation · Forecasting",
     title: "Data Visualisation Dashboard",
-    image: "img/projects/dataviz.jpg",
+    image: "img/DataVisual.png",
     desc: "A Python-based data visualisation project transforming raw weather and vaccination CSV datasets into interactive multi-chart dashboards for non-technical stakeholders, applying Pandas for data cleaning and Matplotlib/Seaborn for trend, distribution, and comparative analysis.",
+    
+    github: "https://github.com/Don-Sanvura/Weather_Forcasting.github.io.git",
+    
     tags: ["Python","Pandas","Matplotlib","Seaborn","Jupyter"],
-    duration: "Add your time here",
+    duration: "2026/05/01 – 2026/06/15",
     role: "Solo build",
     status: "Shipped",
     problem: "Raw weather and vaccination CSVs were technically complete but practically unreadable to a non-technical audience — the insight was buried in rows of numbers rather than in a shape someone could act on.",
@@ -874,9 +919,9 @@ const PROJECTS = [
       "Chart choices were driven by the question being asked, not by what looked most impressive."
     ],
     changelog: [
-      { stage: "v1 — Data cleaning pass", note: "Loaded and cleaned raw CSVs with Pandas; handled nulls and type mismatches.", time: "Add date/time here" },
-      { stage: "v2 — First charts", note: "Built initial trend and distribution charts in Matplotlib.", time: "Add date/time here" },
-      { stage: "v3 — Stakeholder pass", note: "Refined chart types and labelling with Seaborn for a non-technical audience.", time: "Add date/time here" }
+      { stage: "— Data cleaning pass", note: "Loaded and cleaned raw CSVs with Pandas; handled nulls and type mismatches.", time: "2026/05/04 · 10:00" },
+      { stage: "— First charts", note: "Built initial trend and distribution charts in Matplotlib.", time: "2026/05/20 · 13:30" },
+      { stage: "— Stakeholder pass", note: "Refined chart types and labelling with Seaborn for a non-technical audience.", time: "2026/06/10 · 09:45" }
     ]
   },
   {
@@ -884,10 +929,13 @@ const PROJECTS = [
     num: "03",
     tech: "Environmental Intelligence · International Collaboration",
     title: "International Collaborative Project",
-    image: "img/projects/hartbeespoort.jpg",
+    image: "img/InternationalPJ.png",
     desc: "Partnered with international students from Belgium (UCLL) to tackle invasive plant species threatening the Hartbeespoort Dam ecosystem, designing sensor-driven water temperature and pollution prediction models alongside AI-powered camera visualisation to support conservation efforts and position the dam as a revitalised eco-tourism destination while working to reduce pollution.",
+    
+    github: "https://github.com/MADS-Monitoring-Analytics/Smart_Dam_Monitoring_FrontEnd.git",
+    
     tags: ["Sensor Data","Prediction Models","Computer Vision","Team Collaboration"],
-    duration: "Add your time here",
+    duration: "2026/03/01 – 2026/06/30",
     role: "Team project — Belgium Campus × UCLL",
     status: "Shipped",
     problem: "Invasive plant species and pollution were degrading the Hartbeespoort Dam ecosystem, and the team needed a way to both predict deteriorating conditions early and make the case for the dam's eco-tourism potential to non-technical decision-makers.",
@@ -902,9 +950,9 @@ const PROJECTS = [
       "Combined a predictive model with a visual layer so the output served both technical and non-technical audiences."
     ],
     changelog: [
-      { stage: "v1 — Problem scoping", note: "Joint sessions with UCLL to define the ecosystem problem and split workstreams.", time: "Add date/time here" },
-      { stage: "v2 — Prediction model", note: "Built the water temperature and pollution prediction model.", time: "Add date/time here" },
-      { stage: "v3 — Vision layer + presentation", note: "Added AI camera visualisation and packaged findings for the conservation/eco-tourism case.", time: "Add date/time here" }
+      { stage: "— Problem scoping", note: "Joint sessions with UCLL to define the ecosystem problem and split workstreams.", time: "2026/03/20 · 16:00" },
+      { stage: "— Prediction model", note: "Built the water temperature and pollution prediction model.", time: "2026/05/01 · 13:30" },
+      { stage: "— Vision layer + presentation", note: "Added AI camera visualisation and packaged findings for the conservation/eco-tourism case.", time: "2026/06/18 · 10:15" }
     ]
   },
   {
@@ -912,10 +960,13 @@ const PROJECTS = [
     num: "04",
     tech: "Unity · C# · Systems Application",
     title: "Drone Trail System with Teleport Support",
-    image: "img/projects/dronetrail.jpg",
+    image: "img/Drone.png",
     desc: "A hybrid trail rendering system in Unity solving visual artefact problems caused by teleportation. Used a dual-renderer architecture, object pooling, material instancing, and linear alpha fade mathematics — achieving stable frame rates with up to 25 simultaneous fading trails.",
+    
+    github: "https://github.com/Don-Sanvura/DronePJ.git",
+
     tags: ["Unity","C#","Object Pooling","Shader Math"],
-    duration: "Add your time here",
+    duration: "2025/11/01 – 2025/12/15",
     role: "Solo build",
     status: "Shipped",
     problem: "Unity's built-in Trail Renderer draws a straight line between a drone's last known position and its new one — which looked correct for normal movement but produced a jarring streak across the screen the instant a drone teleported.",
@@ -932,9 +983,9 @@ const PROJECTS = [
       "Fade math kept as simple linear interpolation once profiling showed it was visually indistinguishable from a costlier curve."
     ],
     changelog: [
-      { stage: "v1 — Reproduce the bug", note: "Confirmed the streaking artefact was tied specifically to teleport distance.", time: "Add date/time here" },
-      { stage: "v2 — Dual-renderer fix", note: "Split rendering so teleports spawn a new trail instead of bridging the old one.", time: "Add date/time here" },
-      { stage: "v3 — Performance pass", note: "Added object pooling and material instancing; profiled up to 25 simultaneous trails.", time: "Add date/time here" }
+      { stage: "— Reproduce the bug", note: "Confirmed the streaking artefact was tied specifically to teleport distance.", time: "2025/11/08 · 11:30" },
+      { stage: "— Dual-renderer fix", note: "Split rendering so teleports spawn a new trail instead of bridging the old one.", time: "2025/11/21 · 15:40" },
+      { stage: "— Performance pass", note: "Added object pooling and material instancing; profiled up to 25 simultaneous trails.", time: "2025/12/10 · 09:20" }
     ]
   }
 ];
@@ -942,13 +993,13 @@ const PROJECTS = [
 /* ── render project list ── */
 const list = document.getElementById('projects-list');
 PROJECTS.forEach((p,i)=>{
-  const btn = document.createElement('button');
-  btn.className = 'project-item reveal magnetic';
-  btn.dataset.label = 'Open';
-  btn.style.transitionDelay = (i*0.08)+'s';
-  btn.dataset.id = p.id;
+  const button = document.createElement('button');
+  button.className = 'project-item reveal magnetic';
+  button.dataset.label = 'Open';
+  button.style.transitionDelay = (i*0.08)+'s';
+  button.dataset.id = p.id;
   const initials = p.title.split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase();
-  btn.innerHTML = `
+  button.innerHTML = `
     <div class="project-num">${p.num}</div>
     <div class="project-thumb">
       <img src="${p.image || ''}" alt="${p.title} preview" loading="lazy"
@@ -959,11 +1010,22 @@ PROJECTS.forEach((p,i)=>{
       <div class="project-title">${p.title}</div>
       <p class="project-desc">${p.desc}</p>
       <div class="project-meta"><span>${p.status}</span><span>${p.role}</span></div>
+      <div class="project-actions">
+        <button class="project-link-btn" type="button" data-project-link="true">View GitHub Repo</button>
+      </div>
     </div>
     <div class="project-arrow">→</div>
   `;
-  btn.addEventListener('click', (e)=>openCase(p.id, e.currentTarget));
-  list.appendChild(btn);
+  button.addEventListener('click', (e)=>{
+    const linkButton = e.target.closest('[data-project-link="true"]');
+    if (linkButton) {
+      e.stopPropagation();
+      if (p.github) window.open(p.github, '_blank', 'noopener,noreferrer');
+      return;
+    }
+    openCase(p.id, e.currentTarget);
+  });
+  list.appendChild(button);
 });
 
 /* ── render case study content ── */
@@ -979,6 +1041,7 @@ function renderCase(p, idx){
       <h1 class="case-title">${p.title}</h1>
       <p class="case-tagline">${p.desc}</p>
       <div class="case-tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div>
+      ${p.github ? `<div class="case-actions"><button class="case-link-btn" type="button" data-case-link="true">View Repo</button></div>` : ''}
     </div>
     <div class="case-meta-bar">
       <div class="case-meta-item"><div class="case-meta-label">Role</div><div class="case-meta-value">${p.role}</div></div>
@@ -1043,6 +1106,14 @@ function openCase(id, triggerEl){
 
   caseContent.innerHTML = renderCase(p, idx);
   caseIndexEl.textContent = p.num + ' / 04';
+  const caseLinkBtn = caseContent.querySelector('[data-case-link="true"]');
+  if (caseLinkBtn && p.github) {
+    caseLinkBtn.addEventListener('click', (e)=>{
+      e.preventDefault();
+      e.stopPropagation();
+      window.open(p.github, '_blank', 'noopener,noreferrer');
+    });
+  }
   document.getElementById('case-back').onclick = closeCase;
   document.getElementById('case-prev').onclick = ()=>openCase(PROJECTS[(idx-1+PROJECTS.length)%PROJECTS.length].id);
   document.getElementById('case-next').onclick = ()=>openCase(PROJECTS[(idx+1)%PROJECTS.length].id);
@@ -1193,7 +1264,7 @@ if(statsSection) statsObserver.observe(statsSection);
 
 const gpaObserver = new IntersectionObserver(entries=>{
   entries.forEach(e=>{
-    if(e.isIntersecting){ animateCounter(document.querySelector('.gpa-num'), '70.8%'); gpaObserver.disconnect(); }
+    if(e.isIntersecting){ animateCounter(document.querySelector('.gpa-num'), '71.5%'); gpaObserver.disconnect(); }
   });
 }, {threshold:0.5});
 const gpaEl = document.querySelector('.gpa-num');
