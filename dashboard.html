@@ -9,28 +9,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,460;0,9..144,600;0,9..144,680;1,9..144,420;1,9..144,520&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#fbf8f4;
-    --paper-2:#f4eee7;
-    --paper-3:#eee5da;
-    --card:#fffdfb;
-    --ink:#1c1224;
-    --ink-soft:#584a63;
-    --ink-faint:#93869c;
-    --purple-deep:#2d1642;
-    --purple-deeper:#1c0e2e;
-    --purple:#6b3fa0;
-    --purple-mid:#8a5cb8;
-    --lilac:#c9a9e3;
-    --lilac-soft:#ece1f4;
-    --brass:#a87c3f;
-    --brass-light:#d9ab5f;
-    --gold-foil:linear-gradient(120deg,#8a6524 0%,#e8c374 22%,#fff3d6 42%,#c9973f 58%,#8a6524 100%);
-    --line:rgba(107,63,160,0.16);
-    --line-strong:rgba(107,63,160,0.34);
-    --good:#4f8a63;
-    --warn:#b8823f;
-    --shadow:0 24px 70px -28px rgba(28,14,46,0.45);
-    --shadow-lg:0 40px 100px -35px rgba(28,14,46,0.55);
+    --paper:#f7f5ef;
+    --paper-2:#f0ede4;
+    --paper-3:#e6e1d4;
+    --card:#fffefb;
+    --ink:#161a24;
+    --ink-soft:#454b5c;
+    --ink-faint:#8b8f9c;
+    --purple-deep:#0f1c3a;
+    --purple-deeper:#080f22;
+    --purple:#1f3a63;
+    --purple-mid:#3d5a82;
+    --lilac:#aab7c9;
+    --lilac-soft:#e6e9ee;
+    --brass:#9c7a3c;
+    --brass-light:#c9a562;
+    --gold-foil:linear-gradient(120deg,#7a5f2c 0%,#c9a562 22%,#f2e2bb 42%,#a9824a 58%,#7a5f2c 100%);
+    --line:rgba(31,58,99,0.16);
+    --line-strong:rgba(31,58,99,0.34);
+    --good:#3f7a56;
+    --warn:#a9824a;
+    --shadow:0 24px 70px -28px rgba(8,15,34,0.45);
+    --shadow-lg:0 40px 100px -35px rgba(8,15,34,0.55);
     --font-display:'Fraunces',serif;
     --font-body:'Inter',sans-serif;
     --font-mono:'IBM Plex Mono',monospace;
@@ -54,10 +54,17 @@
   ::-webkit-scrollbar-track{background:var(--paper);}
   ::-webkit-scrollbar-thumb{background:var(--lilac);border-radius:3px;}
 
+  /* ── scroll progress (mirrors the main portfolio page) ── */
+  #scroll-progress{
+    position:fixed;top:0;left:0;height:3px;
+    background:linear-gradient(90deg,var(--brass),var(--purple),var(--purple-deep));
+    width:0%;z-index:120;transition:width 0.08s linear;
+  }
+
   /* ── NAV ── */
   nav{
     position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;
-    padding:1.3rem 4rem;background:linear-gradient(to bottom, rgba(251,248,244,0.95), rgba(251,248,244,0.86));
+    padding:1.3rem 4rem;background:linear-gradient(to bottom, rgba(247,245,239,0.95), rgba(247,245,239,0.86));
     backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
   }
   .nav-logo{display:flex;align-items:center;gap:0.7rem;text-decoration:none;}
@@ -72,21 +79,24 @@
     display:flex;align-items:center;gap:0.6rem;font-family:var(--font-mono);font-size:0.68rem;
     letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;
     border:1px solid var(--line-strong);padding:0.6rem 1.1rem;border-radius:100px;
-    transition:color 0.3s,border-color 0.3s,background 0.3s;
+    transition:color 0.3s,border-color 0.3s,background 0.3s,transform 0.3s var(--ease);
   }
-  .nav-back:hover{color:var(--purple-deep);border-color:var(--purple);background:rgba(255,253,251,0.6);}
+  .nav-back:hover{color:var(--purple-deep);border-color:var(--purple);background:rgba(255,254,251,0.6);transform:translateY(-2px);}
 
   /* ── HEADER ── */
-  header.dash-header{padding:4.5rem 4rem 3rem;position:relative;}
+  header.dash-header{padding:4.5rem 4rem 3rem;position:relative;overflow:hidden;}
   .dash-eyebrow{
     font-family:var(--font-mono);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;
     color:var(--brass);margin-bottom:1.3rem;display:inline-flex;align-items:center;gap:0.7rem;
-    border:1px solid var(--line-strong);padding:0.45rem 0.9rem;border-radius:100px;background:rgba(255,253,251,0.6);
+    border:1px solid var(--line-strong);padding:0.45rem 0.9rem;border-radius:100px;background:rgba(255,254,251,0.6);
+    opacity:0;animation:fadeUp 0.8s 0.05s forwards;
   }
-  .dash-eyebrow .status-dot{width:6px;height:6px;border-radius:50%;background:var(--good);box-shadow:0 0 6px var(--good);}
+  .dash-eyebrow .status-dot{width:6px;height:6px;border-radius:50%;background:var(--good);box-shadow:0 0 6px var(--good);animation:blink 2.4s ease-in-out infinite;}
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
   .dash-title{
     font-family:var(--font-display);font-weight:600;font-size:clamp(2.4rem,5.2vw,4.2rem);
     line-height:1.05;color:var(--ink);margin-bottom:1.1rem;
+    opacity:0;animation:fadeUp 0.9s 0.15s forwards;
   }
   .dash-title em{
     font-style:italic;font-weight:420;
@@ -94,13 +104,19 @@
     color:transparent;animation:foilShift 9s ease-in-out infinite;
   }
   @keyframes foilShift{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
-  .dash-sub{max-width:620px;font-size:0.96rem;line-height:1.85;color:var(--ink-soft);}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+  .dash-sub{max-width:620px;font-size:0.96rem;line-height:1.85;color:var(--ink-soft);opacity:0;animation:fadeUp 0.9s 0.28s forwards;}
   .dash-updated{
     margin-top:1.6rem;font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.1em;
-    text-transform:uppercase;color:var(--ink-faint);
+    text-transform:uppercase;color:var(--ink-faint);opacity:0;animation:fadeUp 0.9s 0.4s forwards;
   }
 
   main{padding:0 4rem 6rem;}
+
+  /* ── reveal-on-scroll (shared with the main portfolio page) ── */
+  .reveal{opacity:0;transform:translateY(34px) scale(0.98);filter:blur(3px);
+    transition:opacity 0.8s var(--ease),transform 0.8s var(--ease),filter 0.8s var(--ease);}
+  .reveal.visible{opacity:1;transform:translateY(0) scale(1);filter:blur(0);}
 
   /* ── KPI STRIP ── */
   .kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:3.5rem;}
@@ -130,9 +146,9 @@
   .panel-grid.thirds{grid-template-columns:1fr 1fr 1fr;}
   .panel{
     background:var(--card);border:1px solid var(--line);padding:1.9rem 2rem 1.6rem;
-    transition:border-color 0.35s,box-shadow 0.35s var(--ease);
+    transition:border-color 0.35s,box-shadow 0.35s var(--ease),transform 0.5s var(--ease);
   }
-  .panel:hover{border-color:var(--line-strong);box-shadow:var(--shadow);}
+  .panel:hover{border-color:var(--line-strong);box-shadow:var(--shadow);transform:translateY(-3px);}
   .panel-title{font-family:var(--font-display);font-size:1.08rem;font-weight:600;color:var(--ink);margin-bottom:0.3rem;}
   .panel-caption{font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.04em;color:var(--ink-faint);margin-bottom:1.3rem;}
   .chart-wrap{position:relative;height:280px;}
@@ -172,9 +188,10 @@
 </head>
 <body>
 
+<div id="scroll-progress"></div>
+
 <nav>
   <a href="index.html" class="nav-logo">
-    <span class="logo-seal">DS</span>
     <span class="lockup">DON&nbsp;SANVURA</span>
   </a>
   <a href="index.html" class="nav-back">
@@ -191,18 +208,18 @@
     language proficiency, and academic trend in one place. Every figure here is editable in the script
     at the bottom of this page.
   </p>
-  <div class="dash-updated">Last updated · Add date here</div>
+  
 </header>
 
 <main>
 
   <!-- KPI STRIP -->
   <section class="kpi-grid">
-    <div class="kpi-card"><div class="kpi-label">Grade Average</div><div class="kpi-value">70.8%</div><div class="kpi-note">Across all modules to date</div></div>
-    <div class="kpi-card"><div class="kpi-label">Shipped Projects</div><div class="kpi-value">4</div><div class="kpi-note">Solo &amp; collaborative builds</div></div>
-    <div class="kpi-card"><div class="kpi-label">Certifications</div><div class="kpi-value">2</div><div class="kpi-note">Google-issued credentials</div></div>
-    <div class="kpi-card"><div class="kpi-label">Languages Spoken</div><div class="kpi-value">4</div><div class="kpi-note">1 fluent, 1 proficient, 2 more</div></div>
-    <div class="kpi-card"><div class="kpi-label">Core Stack Tags</div><div class="kpi-value">6</div><div class="kpi-note">Distinct technologies shipped with</div></div>
+    <div class="kpi-card reveal" style="transition-delay:0s"><div class="kpi-label">Grade Average</div><div class="kpi-value">70.8%</div><div class="kpi-note">Across all modules to date</div></div>
+    <div class="kpi-card reveal" style="transition-delay:0.06s"><div class="kpi-label">Shipped Projects</div><div class="kpi-value">4</div><div class="kpi-note">Solo &amp; collaborative builds</div></div>
+    <div class="kpi-card reveal" style="transition-delay:0.12s"><div class="kpi-label">Certifications</div><div class="kpi-value">2</div><div class="kpi-note">Google-issued credentials</div></div>
+    <div class="kpi-card reveal" style="transition-delay:0.18s"><div class="kpi-label">Languages Spoken</div><div class="kpi-value">4</div><div class="kpi-note">1 fluent, 1 proficient, 2 more</div></div>
+    <div class="kpi-card reveal" style="transition-delay:0.24s"><div class="kpi-label">Core Stack Tags</div><div class="kpi-value">6</div><div class="kpi-note">Distinct technologies shipped with</div></div>
   </section>
 
   <!-- SKILLS + LANGUAGES -->
@@ -215,13 +232,13 @@
       <div class="dash-section-desc">Self-rated proficiency (0–100), for calibration against real project evidence.</div>
     </div>
     <div class="panel-grid">
-      <div class="panel">
+      <div class="panel reveal">
         <div class="panel-title">Skill Proficiency</div>
         <div class="panel-caption">Rated across the core stack used in shipped projects</div>
         <div class="chart-wrap"><canvas id="skillRadar"></canvas></div>
         <div class="editable-note">Edit the SKILL_DATA object in the script below to adjust these ratings.</div>
       </div>
-      <div class="panel">
+      <div class="panel reveal" style="transition-delay:0.08s">
         <div class="panel-title">Language Proficiency</div>
         <div class="panel-caption">Spoken languages, self-rated fluency</div>
         <div class="chart-wrap short"><canvas id="langDoughnut"></canvas></div>
@@ -240,17 +257,17 @@
       <div class="dash-section-desc">Derived from the four case studies on the main portfolio page.</div>
     </div>
     <div class="panel-grid thirds">
-      <div class="panel">
+      <div class="panel reveal">
         <div class="panel-title">Status Breakdown</div>
         <div class="panel-caption">All shipped projects, by delivery status</div>
         <div class="chart-wrap short"><canvas id="statusDoughnut"></canvas></div>
       </div>
-      <div class="panel">
+      <div class="panel reveal" style="transition-delay:0.08s">
         <div class="panel-title">Role Split</div>
         <div class="panel-caption">Solo builds vs. collaborative work</div>
         <div class="chart-wrap short"><canvas id="roleDoughnut"></canvas></div>
       </div>
-      <div class="panel">
+      <div class="panel reveal" style="transition-delay:0.16s">
         <div class="panel-title">Technology Frequency</div>
         <div class="panel-caption">How often each tag appears across all projects</div>
         <div class="stack-list" id="stackList"></div>
@@ -267,7 +284,7 @@
       </div>
       <div class="dash-section-desc">Placeholder trend line — replace with real per-semester marks.</div>
     </div>
-    <div class="panel">
+    <div class="panel reveal">
       <div class="panel-title">Grade Average Over Time</div>
       <div class="panel-caption">Add your real semester-by-semester average here</div>
       <div class="chart-wrap"><canvas id="gradeLine"></canvas></div>
@@ -310,16 +327,16 @@ const PROJECT_STATS = [
 /* Placeholder — replace with real semester averages leading to the current 70.8% */
 const GRADE_TREND = {
   labels: ["Sem 1", "Sem 2", "Sem 3", "Sem 4", "Sem 5", "Current"],
-  values: [64, 67, 69, 70, 71, 70.8]
+  values: [64, 67, 69, 70, 71, 71.5]
 };
 
-/* ══════════════════ CHART THEME ══════════════════ */
-const inkSoft = "#584a63";
-const purple  = "#6b3fa0";
-const purpleDeep = "#2d1642";
-const brassLight = "#d9ab5f";
-const lilac = "#c9a9e3";
-const line = "rgba(107,63,160,0.14)";
+/* ══════════════════ CHART THEME — classic navy / antique gold ══════════════════ */
+const inkSoft = "#454b5c";
+const purple  = "#1f3a63";   /* steel navy accent (kept variable name for minimal diff) */
+const purpleDeep = "#0f1c3a";
+const brassLight = "#c9a562";
+const lilac = "#aab7c9";
+const line = "rgba(31,58,99,0.14)";
 
 Chart.defaults.font.family = "'IBM Plex Mono', monospace";
 Chart.defaults.font.size = 11;
@@ -333,30 +350,33 @@ new Chart(document.getElementById('skillRadar'), {
     datasets: [{
       label: 'Proficiency',
       data: SKILL_DATA.values,
-      backgroundColor: 'rgba(107,63,160,0.16)',
+      backgroundColor: 'rgba(31,58,99,0.14)',
       borderColor: purple,
       borderWidth: 2,
       pointBackgroundColor: purpleDeep,
-      pointBorderColor: '#fffdfb',
+      pointBorderColor: '#fffefb',
       pointRadius: 4
     }]
   },
   options: {
     responsive:true, maintainAspectRatio:false,
+    animation: { duration: 1200, easing: 'easeOutQuart' },
     scales: { r: { min:0, max:100, ticks:{ display:false, stepSize:20 }, grid:{ color:line }, angleLines:{ color:line }, pointLabels:{ font:{ size:10.5 } } } },
     plugins: { legend:{ display:false } }
   }
 });
 
 /* Language doughnut */
-const langColors = [purpleDeep, purple, "#8a5cb8", lilac];
+const langColors = [purpleDeep, purple, "#3d5a82", lilac];
 new Chart(document.getElementById('langDoughnut'), {
   type: 'doughnut',
   data: {
     labels: LANGUAGES.map(l=>l.name),
-    datasets: [{ data: LANGUAGES.map(l=>l.score), backgroundColor: langColors, borderColor:'#fffdfb', borderWidth:2 }]
+    datasets: [{ data: LANGUAGES.map(l=>l.score), backgroundColor: langColors, borderColor:'#fffefb', borderWidth:2 }]
   },
-  options: { responsive:true, maintainAspectRatio:false, cutout:'62%', plugins:{ legend:{ display:false } } }
+  options: { responsive:true, maintainAspectRatio:false, cutout:'62%',
+    animation: { duration: 1200, easing: 'easeOutQuart' },
+    plugins:{ legend:{ display:false } } }
 });
 document.getElementById('langLegend').innerHTML = LANGUAGES.map((l,i)=>`
   <div class="legend-chip"><span class="legend-dot" style="background:${langColors[i]}"></span>${l.name} — ${l.level}</div>
@@ -369,9 +389,10 @@ new Chart(document.getElementById('statusDoughnut'), {
   type: 'doughnut',
   data: {
     labels: Object.keys(statusCounts),
-    datasets: [{ data: Object.values(statusCounts), backgroundColor:[purple, brassLight, lilac], borderColor:'#fffdfb', borderWidth:2 }]
+    datasets: [{ data: Object.values(statusCounts), backgroundColor:[purple, brassLight, lilac], borderColor:'#fffefb', borderWidth:2 }]
   },
   options: { responsive:true, maintainAspectRatio:false, cutout:'62%',
+    animation: { duration: 1200, easing: 'easeOutQuart' },
     plugins:{ legend:{ position:'bottom', labels:{ boxWidth:8, boxHeight:8, padding:14 } } } }
 });
 
@@ -382,9 +403,10 @@ new Chart(document.getElementById('roleDoughnut'), {
   type: 'doughnut',
   data: {
     labels: Object.keys(roleCounts),
-    datasets: [{ data: Object.values(roleCounts), backgroundColor:[purpleDeep, brassLight], borderColor:'#fffdfb', borderWidth:2 }]
+    datasets: [{ data: Object.values(roleCounts), backgroundColor:[purpleDeep, brassLight], borderColor:'#fffefb', borderWidth:2 }]
   },
   options: { responsive:true, maintainAspectRatio:false, cutout:'62%',
+    animation: { duration: 1200, easing: 'easeOutQuart' },
     plugins:{ legend:{ position:'bottom', labels:{ boxWidth:8, boxHeight:8, padding:14 } } } }
 });
 
@@ -404,9 +426,6 @@ sortedTags.forEach(([name,count])=>{
   `;
   stackList.appendChild(row);
 });
-requestAnimationFrame(()=>{
-  document.querySelectorAll('.stack-fill').forEach(el=>{ el.style.width = el.dataset.pct + '%'; });
-});
 
 /* Grade trend line */
 new Chart(document.getElementById('gradeLine'), {
@@ -417,7 +436,7 @@ new Chart(document.getElementById('gradeLine'), {
       label: 'Grade Average',
       data: GRADE_TREND.values,
       borderColor: purple,
-      backgroundColor: 'rgba(107,63,160,0.12)',
+      backgroundColor: 'rgba(31,58,99,0.10)',
       pointBackgroundColor: purpleDeep,
       pointRadius: 4,
       tension: 0.35,
@@ -426,6 +445,7 @@ new Chart(document.getElementById('gradeLine'), {
   },
   options: {
     responsive:true, maintainAspectRatio:false,
+    animation: { duration: 1400, easing: 'easeOutQuart' },
     scales: {
       y: { min:50, max:100, grid:{ color:line }, ticks:{ callback:v=>v+'%' } },
       x: { grid:{ display:false } }
@@ -433,6 +453,29 @@ new Chart(document.getElementById('gradeLine'), {
     plugins: { legend:{ display:false } }
   }
 });
+
+/* ── Scroll-triggered reveal, mirroring the main portfolio page ── */
+const revealEls = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      /* animate the stack bars in once their panel becomes visible */
+      e.target.querySelectorAll('.stack-fill').forEach(el=>{
+        requestAnimationFrame(()=>{ el.style.width = el.dataset.pct + '%'; });
+      });
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold:0.12, rootMargin:'0px 0px -60px 0px' });
+revealEls.forEach(el=>revealObserver.observe(el));
+
+/* ── Scroll progress bar, mirroring the main portfolio page ── */
+window.addEventListener('scroll', ()=>{
+  const h = document.documentElement;
+  const pct = (h.scrollTop)/(h.scrollHeight - h.clientHeight)*100;
+  document.getElementById('scroll-progress').style.width = (isFinite(pct)?pct:0)+'%';
+}, {passive:true});
 </script>
 </body>
 </html>
